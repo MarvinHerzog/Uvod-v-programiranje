@@ -10,7 +10,8 @@ class Kac():
 
 
         self.size = 2
-        self.dim = 200*self.size
+        self.dimi = 200
+        self.dim = self.dimi*self.size
         self.kon = 10*self.size
         self.state = 3
         self.speed = 100
@@ -23,7 +24,7 @@ class Kac():
 
         
 
-        self.canv = Canvas(master, width = self.dim, height = self.dim, bg='grey')
+        self.canv = Canvas(master, width = self.dim, height = self.dim, bg='Gray30')
         self.canv.grid(row=1, column=0, rowspan=20)
 
 
@@ -39,8 +40,16 @@ class Kac():
         lab4.grid(row=1,column=2)
         zrt = Button(master, text="0.5x", command = self.hitro)
         zrt.grid(row=2,column=2)
-        zrt = Button(master, text="2x", command = self.pocasno)
-        zrt.grid(row=3,column=2)
+        zryt = Button(master, text="2x", command = self.pocasno)
+        zryt.grid(row=3,column=2)
+        self.sca = Scale(from_=5, to=100, resolution=1,orient=HORIZONTAL)
+        self.sca.grid(row=4,column=2,columnspan=2)
+        zryz = Button(master, text="Število polj", command = self.stpolj)
+        zryz.grid(row=5,column=2,columnspan=2)
+        self.sca2 = Scale(from_=1, to=5, resolution=1,orient=HORIZONTAL)
+        self.sca2.grid(row=6,column=2,columnspan=2)
+        zryz2 = Button(master, text="Razširi okno", command = self.razsiri)
+        zryz2.grid(row=7,column=2,columnspan=2)
 
         
         
@@ -78,7 +87,7 @@ class Kac():
         self.snake = [(0,((self.dim/self.kon)//2)*self.kon),(self.kon,((self.dim/self.kon)//2)*self.kon),(2*self.kon,((self.dim/self.kon)//2)*self.kon)]
 ##        self.snake = [(self.dim//2+2*self.kon,self.dim//2),(self.dim//2+1*self.kon,self.dim//2),(self.dim//2,self.dim//2)]
         self.list = []
-        #self.canv.create_rectangle(0,0,0+self.kon,0+self.kon, fill='red')
+        #self.canv.create_rectangle(0,0,0+self.kon,0+self.kon, fill='#%02x%02x%02x' % (randint(50,250), randint(50,250), randint(50,250)))
         self.narkaco()
         self.randnjam()
         
@@ -86,7 +95,7 @@ class Kac():
     def narkaco(self):     #začetna kača
         for j in self.snake:
             
-            a = self.canv.create_rectangle(j[0],j[1],j[0]+self.kon,j[1]+self.kon, fill= '#%02x%02x%02x' % (randint(0,10), randint(160,240), randint(0,10)))
+            a = self.canv.create_rectangle(j[0],j[1],j[0]+self.kon,j[1]+self.kon, fill= '#%02x%02x%02x' % (randint(0,60), randint(160,240), randint(0,60)))
             self.list.append(a)
 
     def hitro(self):
@@ -100,7 +109,7 @@ class Kac():
     def spremenkaco(self):  #korak po korak
         self.currentstate = self.state
         if self.state == 2:
-            a = self.canv.create_rectangle(self.snake[-1][0]-self.kon,self.snake[-1][1],self.snake[-1][0],self.snake[-1][1]+self.kon,fill= '#%02x%02x%02x' % (randint(0,10), randint(160,240), randint(0,10)))
+            a = self.canv.create_rectangle(self.snake[-1][0]-self.kon,self.snake[-1][1],self.snake[-1][0],self.snake[-1][1]+self.kon,fill= '#%02x%02x%02x' % (randint(0,60), randint(160,240), randint(0,60)))
             self.snake.append((self.snake[-1][0]-self.kon,self.snake[-1][1]))
             self.snake.pop(0)
             self.list.append(a)
@@ -108,7 +117,7 @@ class Kac():
             self.list.pop(0)
             
         if self.state == 1:
-            a = self.canv.create_rectangle(self.snake[-1][0],self.snake[-1][1]-self.kon,self.snake[-1][0]+self.kon,self.snake[-1][1],fill= '#%02x%02x%02x' % (randint(0,10), randint(160,240), randint(0,10)))
+            a = self.canv.create_rectangle(self.snake[-1][0],self.snake[-1][1]-self.kon,self.snake[-1][0]+self.kon,self.snake[-1][1],fill= '#%02x%02x%02x' % (randint(0,60), randint(160,240), randint(0,60)))
             self.snake.append((self.snake[-1][0],self.snake[-1][1]-self.kon))
             self.snake.pop(0)
             self.list.append(a)
@@ -116,7 +125,7 @@ class Kac():
             self.list.pop(0) 
 
         if self.state == 3:
-            a = self.canv.create_rectangle(self.snake[-1][0]+self.kon,self.snake[-1][1],self.snake[-1][0]+2*self.kon,self.snake[-1][1]+self.kon,fill= '#%02x%02x%02x' % (randint(0,10), randint(160,240), randint(0,10)))
+            a = self.canv.create_rectangle(self.snake[-1][0]+self.kon,self.snake[-1][1],self.snake[-1][0]+2*self.kon,self.snake[-1][1]+self.kon,fill= '#%02x%02x%02x' % (randint(0,60), randint(160,240), randint(0,60)))
             self.snake.append((self.snake[-1][0]+self.kon,self.snake[-1][1]))
             self.snake.pop(0)
             self.list.append(a)
@@ -124,7 +133,7 @@ class Kac():
             self.list.pop(0)
 
         if self.state == 4:
-            a = self.canv.create_rectangle(self.snake[-1][0],self.snake[-1][1]+self.kon,self.snake[-1][0]+self.kon,self.snake[-1][1]+2*self.kon,fill= '#%02x%02x%02x' % (randint(0,10), randint(160,240), randint(0,10)))
+            a = self.canv.create_rectangle(self.snake[-1][0],self.snake[-1][1]+self.kon,self.snake[-1][0]+self.kon,self.snake[-1][1]+2*self.kon,fill= '#%02x%02x%02x' % (randint(0,60), randint(160,240), randint(0,60)))
             self.snake.append((self.snake[-1][0],self.snake[-1][1]+self.kon))
             self.snake.pop(0)
             self.list.append(a)
@@ -185,7 +194,7 @@ class Kac():
             self.currentstate = self.state
             
             if self.state == 2:
-                a = self.canv.create_rectangle(self.snake[-1][0]-self.kon,self.snake[-1][1],self.snake[-1][0],self.snake[-1][1]+self.kon,fill= '#%02x%02x%02x' % (randint(0,10), randint(160,240), randint(0,10)))
+                a = self.canv.create_rectangle(self.snake[-1][0]-self.kon,self.snake[-1][1],self.snake[-1][0],self.snake[-1][1]+self.kon,fill= '#%02x%02x%02x' % (randint(0,60), randint(160,240), randint(0,60)))
                 self.snake.append((self.snake[-1][0]-self.kon,self.snake[-1][1]))
                 self.snake.pop(0)
                 self.list.append(a)
@@ -193,7 +202,7 @@ class Kac():
                 self.list.pop(0)
                 
             if self.state == 1:
-                a = self.canv.create_rectangle(self.snake[-1][0],self.snake[-1][1]-self.kon,self.snake[-1][0]+self.kon,self.snake[-1][1],fill='#%02x%02x%02x' % (randint(0,10), randint(160,240), randint(0,10)))
+                a = self.canv.create_rectangle(self.snake[-1][0],self.snake[-1][1]-self.kon,self.snake[-1][0]+self.kon,self.snake[-1][1],fill='#%02x%02x%02x' % (randint(0,60), randint(160,240), randint(0,60)))
                 self.snake.append((self.snake[-1][0],self.snake[-1][1]-self.kon))
                 self.snake.pop(0)
                 self.list.append(a)
@@ -201,7 +210,7 @@ class Kac():
                 self.list.pop(0) 
 
             if self.state == 3:
-                a = self.canv.create_rectangle(self.snake[-1][0]+self.kon,self.snake[-1][1],self.snake[-1][0]+2*self.kon,self.snake[-1][1]+self.kon,fill='#%02x%02x%02x' % (randint(0,10), randint(160,240), randint(0,10)))
+                a = self.canv.create_rectangle(self.snake[-1][0]+self.kon,self.snake[-1][1],self.snake[-1][0]+2*self.kon,self.snake[-1][1]+self.kon,fill='#%02x%02x%02x' % (randint(0,60), randint(160,240), randint(0,60)))
                 self.snake.append((self.snake[-1][0]+self.kon,self.snake[-1][1]))
                 self.snake.pop(0)
                 self.list.append(a)
@@ -209,7 +218,7 @@ class Kac():
                 self.list.pop(0)
 
             if self.state == 4:
-                a = self.canv.create_rectangle(self.snake[-1][0],self.snake[-1][1]+self.kon,self.snake[-1][0]+self.kon,self.snake[-1][1]+2*self.kon,fill='#%02x%02x%02x' % (randint(0,10), randint(160,240), randint(0,10)))
+                a = self.canv.create_rectangle(self.snake[-1][0],self.snake[-1][1]+self.kon,self.snake[-1][0]+self.kon,self.snake[-1][1]+2*self.kon,fill='#%02x%02x%02x' % (randint(0,60), randint(160,240), randint(0,60)))
                 self.snake.append((self.snake[-1][0],self.snake[-1][1]+self.kon))
                 self.snake.pop(0)
                 self.list.append(a)
@@ -229,7 +238,7 @@ class Kac():
         while True:
             self.njam = (randint(0,self.dim//(self.kon)-1)*self.kon,randint(0,self.dim//(self.kon)-1)*self.kon)
             if self.njam not in self.snake:
-               self.njamlik = self.canv.create_rectangle(self.njam[0],self.njam[1],self.njam[0]+self.kon,self.njam[1]+self.kon,fill='red')
+               self.njamlik = self.canv.create_rectangle(self.njam[0],self.njam[1],self.njam[0]+self.kon,self.njam[1]+self.kon,fill='#%02x%02x%02x' % (randint(50,250), randint(50,250), randint(50,250)))
                break
 
 
@@ -243,6 +252,30 @@ class Kac():
         self.snake.insert(0,self.snake[0])
         self.list.insert(0,'mark')
 
+
+    def stpolj(self):
+        self.dimi =self.sca.get()*10
+        self.canv.delete(ALL)
+        self.dim = self.dimi*self.size
+        for i in range(0,int(self.dim//10)*self.size):
+            self.canv.create_line(i*self.kon,000,i*self.kon,self.dim,)
+            self.canv.create_line(0,i*self.kon,self.dim,i*self.kon)
+        self.nova()
+        self.canv.config(width = self.dim, height = self.dim)
+        
+
+    def razsiri(self):
+        self.size = self.sca2.get()
+        self.dim = self.dimi*self.size
+        self.kon = 10*self.size
+        self.canv.delete(ALL)
+        for i in range(0,int(self.dim//10)*self.size):
+            self.canv.create_line(i*self.kon,000,i*self.kon,self.dim,)
+            self.canv.create_line(0,i*self.kon,self.dim,i*self.kon)
+        self.nova()
+        self.canv.config(width = self.dim, height = self.dim)
+        
+    
     def nova(self):
         self.counter = 0
         self.state = 3
@@ -277,29 +310,30 @@ class Kac():
         if ime == "":  # Pritisnili smo Cancel
             return
 
-        self.canv.delete(self.njamlik)
-        for i in self.list:
-            try:
-                self.canv.delete(i)
-            except:
-                pass
-        self.list = []
-        self.score.set(0)
+        
 
         
         with open(ime, encoding="utf8") as f:
             for i in f:
                 by=i.split(',,')
-                self.snake = literal_eval(by[0])
-                self.njam = literal_eval(by[1])
-                self.state = int(by[3])
-                self.rekord.set(int(by[2]))
-                if self.dim//self.size != int(by[4])//int(by[5]):
-                    print('Napačna dimenzija! Ob zagonu nastavi dimenzijo na '+ str(int(by[4])//int(by[5])))
-                self.size = int(by[5])
-                self.score.set(int(by[6]))
-                self.narkaco()
-                self.njamlik = self.canv.create_rectangle(self.njam[0],self.njam[1],self.njam[0]+self.kon,self.njam[1]+self.kon,fill='red')
+                if self.dim//self.size != int(by[4])//int(by[5]) and self.size != int(by[5]):
+                    print('Napačna dimenzija! Ob zagonu nastavi dimenzijo na '+ str((int(by[4])//int(by[5]))//10)+' ter razširitev na ' + str(int(by[5])))
+                else:
+                    self.canv.delete(self.njamlik)
+                    for i in self.list:
+                        try:
+                            self.canv.delete(i)
+                        except:
+                            pass
+                    self.list = []
+                    self.snake = literal_eval(by[0])
+                    self.njam = literal_eval(by[1])
+                    self.state = int(by[3])
+                    self.rekord.set(int(by[2]))                
+                    self.size = int(by[5])
+                    self.score.set(int(by[6]))
+                    self.narkaco()
+                    self.njamlik = self.canv.create_rectangle(self.njam[0],self.njam[1],self.njam[0]+self.kon,self.njam[1]+self.kon,fill='#%02x%02x%02x' % (randint(50,250), randint(50,250), randint(50,250)))
                     
 
 
