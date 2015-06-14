@@ -22,6 +22,7 @@ class Kac():
         self.rekord = IntVar(value = 0)
         y1 = StringVar()
 
+
         
 
         self.canv = Canvas(master, width = self.dim, height = self.dim, bg='Gray30')
