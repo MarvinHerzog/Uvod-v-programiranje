@@ -340,4 +340,4 @@ class Kac():
 
 root = Tk()
 app = Kac(root)
-root.mainloop
+root.mainloop()
